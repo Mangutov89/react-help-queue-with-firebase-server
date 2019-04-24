@@ -14,6 +14,7 @@ function NewTicketForm(props){
     _names.value = ''
     _location.value = ''
     _issue.value = ''
+    location.hash = '/';
 
   }
 
