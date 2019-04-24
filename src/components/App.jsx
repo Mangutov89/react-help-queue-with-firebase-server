@@ -5,18 +5,38 @@ import { Switch, Route } from 'react-router-dom'
 import NewTicketControl from './NewTicketControl'
 import Error404 from './Error404'
 
+
 class App extends React.Component{
 
   constructor (props) {
     super(props)
     this.state = {
-      masterTicketList: [{names: 'Chris', location: 'R4', issue:'This is a placeholder issue'}]
+      masterTicketList: []
     }
     this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this)
   }
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updateTicketElapsedWaitTime(),
+    60000
+    )
+  }
+
+
+  componentWillUnmount(){
+    clearInterval(this.waitTimeUpdateTimer)
+  }
   handleAddingNewTicketToList(newTicket){
     var newMasterTicketList = this.state.masterTicketList.slice()
+    newTicket.formattedWaitTime = (newTicket.timeOpen).fromNow(true)
     newMasterTicketList.push(newTicket)
+    this.setState({masterTicketList: newMasterTicketList})
+  }
+  updateTicketElapsedWaitTime() {
+    let newMasterTicketList = this.state.masterTicketList.slice()
+    newMasterTicketList.forEach((ticket) =>
+      ticket.formattedWaitTime = (ticket.timeOpen).fromNow(true)
+    )
     this.setState({masterTicketList: newMasterTicketList})
   }
   render() {
