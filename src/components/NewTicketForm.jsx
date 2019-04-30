@@ -10,22 +10,21 @@ function NewTicketForm(props){
   let _issue = null
 
   function handleNewTicketFormSubmission(event) {
-    const { dispatch } = props
-    event.preventDefault()
+    const { dispatch } = props;
+    event.preventDefault();
     const action = {
       type: 'ADD_TICKET',
       id: v4(),
       names: _names.value,
       location: _location.value,
       issue: _issue.value,
-      timeOpen: new Moment()
-    }
-    dispatch(action)
-    _names.value = ''
-    _location.value = ''
-    _issue.value = ''
-    location.hash = '/'
-
+      timeOpen: new Moment(),
+      formattedWaitTime: new Moment().fromNow(true)
+    };
+    dispatch(action);
+    _names.value = '';
+    _location.value = '';
+    _issue.value = '';
   }
 
   // var styles = {
