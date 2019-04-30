@@ -4,8 +4,8 @@ import TicketList from './TicketList'
 import { Switch, Route } from 'react-router-dom'
 import NewTicketControl from './NewTicketControl'
 import Error404 from './Error404'
+import Momment from 'moment'
 import Admin from './Admin'
-import { v4 } from 'uuid'
 
 
 
@@ -17,7 +17,6 @@ class App extends React.Component{
       masterTicketList: {},
       selectedTicket: null
     }
-    this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this)
     this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this)
   }
 
@@ -31,14 +30,6 @@ class App extends React.Component{
 
   componentWillUnmount(){
     clearInterval(this.waitTimeUpdateTimer)
-  }
-  handleAddingNewTicketToList(newTicket){
-    let newTicketId = v4()
-    let newMasterTicketList = Object.assign({},this.state.masterTicketList, {
-      [newTicketId]: newTicket
-    })
-    newMasterTicketList[newTicketId].formattedWaitTime = newMasterTicketList[newTicketId].timeOpen.fromNow(true)
-    this.setState({masterTicketList: newMasterTicketList})
   }
   updateTicketElapsedWaitTime() {
     let newMasterTicketList = Object.assign({}, this.state.masterTicketList)

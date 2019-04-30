@@ -1,7 +1,8 @@
 import React from 'react'
 import patos from '../assets/images/patos.jpeg'
-import PropTypes from 'prop-types'
 import Moment from 'moment'
+import { connect } from 'react-redux'
+import { v4 } from 'uuid'
 
 function NewTicketForm(props){
   let _names = null
@@ -9,8 +10,17 @@ function NewTicketForm(props){
   let _issue = null
 
   function handleNewTicketFormSubmission(event) {
+    const { dispatch } = props
     event.preventDefault()
-    props.onNewTicketCreation({names: _names.value, location: _location.value, issue: _issue.value, timeOpen: new Moment()})
+    const action = {
+      type: 'ADD_TICKET',
+      id: v4(),
+      names: _names.value,
+      location: _location.value,
+      issue: _issue.value,
+      timeOpen: new Moment()
+    }
+    dispatch(action)
     _names.value = ''
     _location.value = ''
     _issue.value = ''
@@ -67,8 +77,6 @@ function NewTicketForm(props){
   )
 }
 
-NewTicketForm.propTypes = {
-  onNewTicketCreation: PropTypes.func
-}
+NewTicketForm = connect()(NewTicketForm)
 
 export default NewTicketForm
