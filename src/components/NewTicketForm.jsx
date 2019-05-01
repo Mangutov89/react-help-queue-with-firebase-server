@@ -3,6 +3,8 @@ import patos from '../assets/images/patos.jpeg'
 import Moment from 'moment'
 import { connect } from 'react-redux'
 import { v4 } from 'uuid'
+import c from './../constants'
+
 
 function NewTicketForm(props){
   let _names = null
@@ -10,21 +12,21 @@ function NewTicketForm(props){
   let _issue = null
 
   function handleNewTicketFormSubmission(event) {
-    const { dispatch } = props;
-    event.preventDefault();
+    const { dispatch } = props
+    event.preventDefault()
     const action = {
-      type: 'ADD_TICKET',
+      type: c.ADD_TICKET,
       id: v4(),
       names: _names.value,
       location: _location.value,
       issue: _issue.value,
       timeOpen: new Moment(),
       formattedWaitTime: new Moment().fromNow(true)
-    };
-    dispatch(action);
-    _names.value = '';
-    _location.value = '';
-    _issue.value = '';
+    }
+    dispatch(action)
+    _names.value = ''
+    _location.value = ''
+    _issue.value = ''
   }
 
   // var styles = {
